@@ -12,9 +12,10 @@ class LocalToAgBase:
   recordLimit = -1
   def __init__(self):
     parser = argparse.ArgumentParser()
+    parser.add_argument('--config', default=".agbase", help="AgBase Config File (username password e.t.c)")
     parser.add_argument('--user', required=True, help="AgBase Username")
     parser.add_argument('--passwd', required=True, help="AgBase Password")
-    parser.add_argument('--server', default="https://localhost:8443/api/", help="AgBase Server")
+    parser.add_argument('--server', default="https://agbase.elec.ac.nz/api/", help="AgBase Server")
     parser.add_argument('--print-weights' , action='store_true', help="Prints all the animals and their weights from the database")
     parser.add_argument('--upload-animals', action='store_true', help="Uploads all the animals from postgres to agbase")
     parser.add_argument('--upload-weights', action='store_true', help="Uploads all the weights from postgres to agbase")
