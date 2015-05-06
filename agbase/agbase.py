@@ -535,6 +535,9 @@ class AgBase:
             json_animal[u'FarmId'])
 
 
+  '''
+    Return an animal object or 'None' if no such animal exists.
+  '''
   def get_animal_by_vid(self, farm, vid):
 
     params = {'farm': farm.id, 'vid': urllib.quote_plus(str(vid))}
@@ -575,11 +578,15 @@ class AgBase:
 
     return True
 
+
+  '''
+    Upload a single measurement model object
+    TODO. This is not implemented.
+  '''
   def upload_measurement(self, farm, measurement):
     
     measurement_details = measurement.to_json()
     # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
-
 
     result = self.__api_call('post', 'measurements/', measurement_details)
 
