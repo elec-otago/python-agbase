@@ -30,6 +30,8 @@ class MeasurementList:
 
         self.measurements.append(measurement_details)
 
+    def get_measurement_count(self):
+        return len(self.measurements)
 
     def get_json(self):
 

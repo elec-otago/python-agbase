@@ -517,7 +517,8 @@ class AgBase:
         json_response = result.json()
 
         json_animals = json_response[u'animals']
-
+        if (len(json_animals) == 0):
+            return None
         json_animal = json_animals[0]
 
 
