@@ -524,9 +524,10 @@ class AgBase:
     json_response = result.json()
 
     json_animals = json_response[u'animals']
+    if (json_animals == []):
+      return None
 
     json_animal = json_animals[0]
-
 
     return Animal( json_animal[u'id'],
             json_animal[u'eid'],
