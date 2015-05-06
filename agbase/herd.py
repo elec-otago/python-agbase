@@ -14,10 +14,7 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class AgBase.Herd:  
-  def __init__(self):
-      self.__api_call = AgBase.__api_call
-
+class Herd(AgBase):  
   def create_herd(self, farm, name):
     result = self.__api_call('post', 'herds/', {'name': name, 'farmId': farm.id})
 

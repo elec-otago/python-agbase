@@ -14,9 +14,7 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class AgBase.Algorithm:  
-  def __init__(self):
-      self.__api_call = AgBase.__api_call
+class Algorithm(AgBase):  
   def create_algorithm(self, name, measurement_category):
 
     result = self.__api_call('post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})

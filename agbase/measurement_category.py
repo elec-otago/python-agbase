@@ -14,10 +14,7 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class AgBase.Animal:  
-  def __init__(self):
-      self.__api_call = AgBase.__api_call
-
+class Animal(AgBase):  
   def create_measurement_category(self, name):
 
     result = self.__api_call('post', 'measurement-categories/', {'name': name})

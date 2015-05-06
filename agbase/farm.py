@@ -14,11 +14,8 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class AgBase.Farm:  
-  def __init__(self):
-      self.__api_call = AgBase.__api_call
-
-def create_farm(self, name):
+class Farm(AgBase):  
+  def create_farm(self, name):
     result = self.__api_call('post', 'farms/', {'name': name})
 
     if result.status_code != 200:

@@ -1,7 +1,7 @@
 import agbase_config as config
 from models import *
 from measurement_list import *
-
+from agbase import AgBase
 import requests
 import json
 import datetime
@@ -15,10 +15,7 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'mark'
 
 
-class AgBase.Measurement:
-  def __init__(self):
-    self.__api_call = AgBase.__api_call
-
+class Measurement(AgBase):
   '''
     Upload a single measurement model object
     TODO. This is not implemented.
