@@ -535,9 +535,34 @@ class AgBase:
             json_animal[u'FarmId'])
 
 
+  def get_animal_by_vid(self, farm, vid):
+
+    params = {'farm': farm.id, 'vid': urllib.quote_plus(str(vid))}
+
+    result = self.__api_call('get', 'animals/', None, params)
+
+    if result.status_code != 200:
+      return None
+
+    json_response = result.json()
+    json_animals = json_response[u'animals']
+    
+    if (json_animals == []):
+      return None
+    
+    json_animal = json_animals[0]
+
+
+    return Animal( json_animal[u'id'],
+            json_animal[u'eid'],
+            json_animal[u'vid'],
+            json_animal[u'HerdId'],
+            json_animal[u'FarmId'])
+
+
   def update_animal_vid(self, animal, vid):
 
-    result = self.__api_call('put', 'animals/{}'.format(animal.id), {'vid': vid})
+    result = self.__api_call('put', 'animals/{}'.format(animal.id), {'vid': str(vid)})
 
     json_response = result.json()
 
@@ -550,6 +575,28 @@ class AgBase:
 
     return True
 
+  def upload_measurement(self, farm, measurement):
+    
+    measurement_details = measurement.to_json()
+    # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
+
+
+    result = self.__api_call('post', 'measurements/', measurement_details)
+
+    if result.status_code != 200:
+      return None
+
+    json_response = result.json()
+
+    json_measurement = json_response[u'measurement']
+
+    self.__agbase_log(json_response[u'message'])
+
+    result_measurement = Measurement()
+
+    result_measurement.init_with_json(json_measurement)
+
+    return result_measurement
 
   def __create_measurement_with_details(self, measurement_details, value2=None, value3=None, value4=None, value5=None, comment=None):
 
