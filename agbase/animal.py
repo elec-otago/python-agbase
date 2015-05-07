@@ -4,7 +4,6 @@ from agbase import AgBase
 import requests
 import json
 import datetime
-import urllib
 import os
 
 if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
@@ -14,7 +13,11 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Animal(AgBase):  
+class AnimalAPI:
+  
+    def __init__(self, ab):
+      self.ab = ab
+      
     def create_animal(self, farm, eid, vid=None, herd=None):
         animal_details = {'farmId': farm.id, 'eid': eid}
 
@@ -24,7 +27,7 @@ class Animal(AgBase):
         if herd is not None:
             animal_details['herdId'] = herd.id
 
-        result = self.__api_call('post', 'animals/', animal_details)
+        result = self.ab.api_call('post', 'animals/', animal_details)
 
         if result.status_code != 200:
             return None
@@ -33,7 +36,7 @@ class Animal(AgBase):
 
         json_animal = json_response[u'animal']
 
-        self.__agbase_log(json_response[u'message'])
+        self.ab.log(json_response[u'message'])
 
         return Animal(json_animal[u'id'],
             json_animal[u'eid'],
@@ -44,14 +47,14 @@ class Animal(AgBase):
 
     def set_animal_herd(self, animal, herd):
         if herd.farm_id != animal.farm_id:
-            self.__agbase_log("Cannot add animal to herd on different farm!")
+            self.ab.log("Cannot add animal to herd on different farm!")
             return False
 
-        result = self.__api_call('put', 'animals/{}'.format(animal.id), {'herdId': herd.id})
+        result = self.ab.api_call('put', 'animals/{}'.format(animal.id), {'herdId': herd.id})
 
         json_response = result.json()
 
-        self.__agbase_log(json_response[u'message'])
+        self.ab.log(json_response[u'message'])
 
         if result.status_code != 200:
             return False
@@ -62,18 +65,17 @@ class Animal(AgBase):
 
 
     def remove_animal(self, animal):
-        result = self.__api_call('delete', 'animals/{}'.format(animal.id))
+        result = self.ab.api_call('delete', 'animals/{}'.format(animal.id))
 
         json_response = result.json()
 
-        self.__agbase_log(json_response[u'message'])
+        self.ab.log(json_response[u'message'])
 
         if result.status_code != 200:
             return False
 
         return True
-
-
+      
     def get_animals(self, farm=None, herd=None):
 
         params = None
@@ -83,7 +85,7 @@ class Animal(AgBase):
         elif farm is not None:
             params = {'farm': farm.id}
 
-        result = self.__api_call('get', 'animals/')
+        result = self.ab.api_call('get', 'animals/')
 
         if result.status_code != 200:
             return None
@@ -106,14 +108,17 @@ class Animal(AgBase):
 
     def get_animal_by_eid(self, farm, eid):
 
-        params = {'farm': farm.id, 'eid': urllib.quote_plus(eid)}
+        params = {'farm': farm.id, 'eid': (eid)}
 
-        result = self.__api_call('get', 'animals/', None, params)
+        result = self.ab.api_call('get', 'animals/', None, params)
 
         if result.status_code != 200:
-            json_animals = json_response[u'animals']
+          return None
         
         json_response = result.json()
+        self.ab.log("get_animal_by_eid -> %s" % json_response)
+        
+        json_animals = json_response[u'animals']
         
         if (len(json_animals) == 0):
             return None
@@ -132,9 +137,9 @@ class Animal(AgBase):
     '''
     def get_animal_by_vid(self, farm, vid):
 
-        params = {'farm': farm.id, 'vid': urllib.quote_plus(str(vid))}
+        params = {'farm': farm.id, 'vid': (str(vid))}
 
-        result = self.__api_call('get', 'animals/', None, params)
+        result = self.ab.api_call('get', 'animals/', None, params)
 
         if result.status_code != 200:
             return None
@@ -157,11 +162,11 @@ class Animal(AgBase):
 
     def update_animal_vid(self, animal, vid):
 
-        result = self.__api_call('put', 'animals/{}'.format(animal.id), {'vid': str(vid)})
+        result = self.ab.api_call('put', 'animals/{}'.format(animal.id), {'vid': str(vid)})
 
         json_response = result.json()
 
-        self.__agbase_log(json_response[u'message'])
+        self.ab.log(json_response[u'message'])
 
         if result.status_code != 200:
             return False

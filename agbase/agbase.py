@@ -24,26 +24,26 @@ class AgBase:
     self.session.headers.update({'content-type': 'application/json'})
     self.session.verify = config.defaultSigning
     self.authenticationTime = 0
+    self.expiry_time = 0
     self.logging = False
 
 
-  def __agbase_log(self, string):
+  def log(self, string):
     if self.logging is True:
       print("-- AgBase: {}".format(string))
 
 
   def api_call(self, http_verb, route, data=None, query_params=None):
 
-    self.__agbase_log("API call of type {} to {}".format(http_verb,route))
+    self.log("API call of type {} to {}".format(http_verb,route))
 
     authenticated = True
 
-    expiry_time = self.authenticationTime + datetime.timedelta(minutes=config.token_time_out)
 
-    if self.authenticationTime == 0 or datetime.datetime.now() > expiry_time:
+    if self.authenticationTime == 0 or datetime.datetime.now() > self.expiry_time:
 
       if self.authenticationTime != 0:
-        self.__agbase_log('Token Expired - reauthenticating')
+        self.log('Token Expired - reauthenticating')
 
       authenticated = self.__auth_user(self.currentUser, self.currentPwd)
 
@@ -69,14 +69,14 @@ class AgBase:
 
   def __auth_user(self, email, pwd):
 
-    self.__agbase_log("Authenticating User")
+    self.log("Authenticating User")
 
     user_details = {"email": email, "password": pwd}
 
     post_response = self.session.post(self.agbase_api_url + "auth/", data=json.dumps(user_details))
 
     if post_response.status_code != 200:
-      self.__agbase_log("Authentication Failed!")
+      self.log("Authentication Failed!")
       return None
 
     json_response = post_response.json()
@@ -84,10 +84,11 @@ class AgBase:
     self.session.headers.update({'Authorization': 'Bearer ' + json_response[u'token']})
 
     self.authenticationTime = datetime.datetime.now()
+    self.expiry_time = datetime.timedelta(minutes=config.token_time_out) + self.authenticationTime
 
     json_user = json_response[u'user']
 
-    self.__agbase_log("Authenticated user {}!".format(json_user[u'email']))
+    self.log("Authenticated user {}!".format(json_user[u'email']))
 
     return User(json_user[u'firstName'], json_user[u'lastName'], json_user[u'email'], json_user[u'id'])
 
@@ -104,7 +105,7 @@ class AgBase:
     self.logging = is_on
 
     if is_on is True:
-      self.__agbase_log("AgBase Logging Enabled!")
+      self.log("AgBase Logging Enabled!")
 
 
   #Requires current user to have admin rights
@@ -141,7 +142,7 @@ class AgBase:
 
     json_user = json_response[u'user']
 
-    self.__agbase_log(json_response[u'message'])
+    self.log(json_response[u'message'])
 
     return User(json_user[u'firstName'], json_user[u'lastName'], json_user[u'email'], json_user[u'id'])
 
@@ -152,7 +153,7 @@ class AgBase:
 
     json_response = result.json()
 
-    self.__agbase_log(json_response[u'message'])
+    self.log(json_response[u'message'])
 
     if result.status_code != 200:
       return False

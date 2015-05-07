@@ -14,16 +14,20 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Farm(AgBase):  
+class FarmAPI:
+  
+  def __init__(self, ab):
+    self.ab = ab
+      
   def create_farm(self, name):
-    result = self.__api_call('post', 'farms/', {'name': name})
+    result = self.ab.api_call('post', 'farms/', {'name': name})
 
     if result.status_code != 200:
       return None
 
     json_response = result.json()
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     json_farm = json_response[u'farm']
 
@@ -31,9 +35,9 @@ class Farm(AgBase):
 
 
   def remove_farm(self, farm):
-    result = self.__api_call('delete', 'farms/{}'.format(farm.id))
+    result = self.ab.api_call('delete', 'farms/{}'.format(farm.id))
 
-    self.__agbase_log(result.json()[u'message'])
+    self.ab.log(result.json()[u'message'])
 
     if result.status_code != 200:
       return False
@@ -48,7 +52,7 @@ class Farm(AgBase):
     if user is not None:
       params = {'user': user.id}
 
-    result = self.__api_call('get','farms/', None, params )
+    result = self.ab.api_call('get','farms/', None, params )
 
     if result.status_code != 200:
       return None
@@ -66,7 +70,7 @@ class Farm(AgBase):
 
 
   def get_farm(self, farmId):
-    result = self.__api_call('get', 'farms/{}'.format(farmId))
+    result = self.ab.api_call('get', 'farms/{}'.format(farmId))
 
     if result.status_code != 200:
       return None
