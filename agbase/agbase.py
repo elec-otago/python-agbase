@@ -519,12 +519,15 @@ class AgBase:
     result = self.__api_call('get', 'animals/', None, params)
 
     if result.status_code != 200:
-    json_animals = json_response[u'animals']
-    
+      return None
+
     json_response = result.json()
+
+    json_animals = json_response[u'animals']
     
     if (len(json_animals) == 0):
         return None
+      
     json_animal = json_animals[0]
     
     
