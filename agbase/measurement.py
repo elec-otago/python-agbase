@@ -14,11 +14,11 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 
 __author__ = 'mark'
 
-
-class Measurement(AgBase):
-  def __init__(self):
-    AgBase.__init__(self)
-    self.logging = False #= AgBase.logging
+class MeasurementAPI:
+  
+  def __init__(self, ab):
+    self.ab = ab
+      
   '''
     Upload a single measurement model object
     TODO. This is not implemented.
@@ -28,7 +28,7 @@ class Measurement(AgBase):
     measurement_details = measurement.to_json()
     # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
-    result = AgBase.api_call(self,'post', 'measurements/', measurement_details)
+    result = self.ab.api_call(self,'post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -37,7 +37,7 @@ class Measurement(AgBase):
 
     json_measurement = json_response[u'measurement']
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     result_measurement = Measurement()
 
@@ -62,7 +62,7 @@ class Measurement(AgBase):
     if comment is not None:
       measurement_details['comment'] = comment
 
-    result = AgBase.api_call(self,'post', 'measurements/', measurement_details)
+    result = self.ab.api_call(self,'post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -71,7 +71,7 @@ class Measurement(AgBase):
 
     json_measurement = json_response[u'measurement']
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     result_measurement = Measurement()
 
@@ -95,11 +95,11 @@ class Measurement(AgBase):
 
 
   def remove_measurement(self, measurement):
-    result = AgBase.api_call(self,'delete', 'measurements/{}'.format(measurement.id))
+    result = self.ab.api_call(self,'delete', 'measurements/{}'.format(measurement.id))
 
     json_response = result.json()
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     if result.status_code != 200:
       return False
@@ -113,7 +113,7 @@ class Measurement(AgBase):
     if algorithm is not None:
       params['algorithm'] = algorithm
 
-    result = AgBase.api_call(self,'get', 'measurements/', None, params)
+    result = self.ab.api_call(self,'get', 'measurements/', None, params)
 
     if result.status_code != 200:
       return None
@@ -139,7 +139,7 @@ class Measurement(AgBase):
 
   def upload_measurement_list(self, measurement_list):
 
-    result = AgBase.api_call(self,'post', 'measurements/', measurement_list.get_json())
+    result = self.ab.api_call(self,'post', 'measurements/', measurement_list.get_json())
 
     if result.status_code != 200:
       return None

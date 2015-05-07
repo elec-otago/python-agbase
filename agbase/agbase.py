@@ -18,8 +18,6 @@ __author__ = 'mark'
 class AgBase(object):
   def __init__(self):
     self.agbase_api_url = config.defaultServerIp
-    self.currentUser = "unittest@agbase.elec.ac.nz"
-    self.currentPwd = "test"
     self.session = requests.Session()
     self.session.headers.update({'content-type': 'application/json'})
     self.session.verify = config.defaultSigning
