@@ -32,7 +32,7 @@ class AgBase:
       print("-- AgBase: {}".format(string))
 
 
-  def __api_call(self, http_verb, route, data=None, query_params=None):
+  def api_call(self, http_verb, route, data=None, query_params=None):
 
     self.__agbase_log("API call of type {} to {}".format(http_verb,route))
 

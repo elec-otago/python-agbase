@@ -1,4 +1,3 @@
-import agbase_config as config
 from models import *
 from agbase import AgBase
 import requests
@@ -14,7 +13,11 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Animal(AgBase):  
+class MeasurementCategory(AgBase):
+  def __init__(self):
+    AgBase.__init__(self)
+    #self.__api_call = AgBase.api_call
+
   def create_measurement_category(self, name):
 
     result = self.__api_call('post', 'measurement-categories/', {'name': name})
