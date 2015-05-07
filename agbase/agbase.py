@@ -15,11 +15,11 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'mark'
 
 
-class AgBase:
+class AgBase(object):
   def __init__(self):
-    self.agbase_api_url = None
-    self.currentUser = ""
-    self.currentPwd = ""
+    self.agbase_api_url = config.defaultServerIp
+    self.currentUser = "unittest@agbase.elec.ac.nz"
+    self.currentPwd = "test"
     self.session = requests.Session()
     self.session.headers.update({'content-type': 'application/json'})
     self.session.verify = config.defaultSigning
@@ -111,7 +111,7 @@ class AgBase:
   #Requires current user to have admin rights
   def get_roles(self):
 
-    result = self.__api_call('get', 'farm-roles/')
+    result = self.api_call('get', 'farm-roles/')
 
     if result.status_code != 200:
       return None
@@ -133,7 +133,7 @@ class AgBase:
 
     user_details = {'firstName': first_name, 'lastName': last_name, 'email': email, 'password': password, 'roleId': role.id}
 
-    result = self.__api_call('post', 'users/', user_details)
+    result = self.api_call('post', 'users/', user_details)
 
     if result.status_code != 200:
       return None
@@ -149,7 +149,7 @@ class AgBase:
 
   #Requires current user to have admin rights
   def remove_user(self, user):
-    result = self.__api_call('delete', 'users/{}'.format(user.id))
+    result = self.api_call('delete', 'users/{}'.format(user.id))
 
     json_response = result.json()
 
@@ -169,7 +169,7 @@ class AgBase:
     if farm is not None:
       params = {'farm': farm.id}
 
-    result = self.__api_call('get', 'users/', None, params)
+    result = self.api_call('get', 'users/', None, params)
 
     if result.status_code != 200:
       return None

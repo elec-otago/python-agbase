@@ -16,6 +16,9 @@ __author__ = 'mark'
 
 
 class Measurement(AgBase):
+  def __init__(self):
+    AgBase.__init__(self)
+    self.logging = False #= AgBase.logging
   '''
     Upload a single measurement model object
     TODO. This is not implemented.
@@ -25,7 +28,7 @@ class Measurement(AgBase):
     measurement_details = measurement.to_json()
     # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
-    result = self.__api_call('post', 'measurements/', measurement_details)
+    result = AgBase.api_call(self,'post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -59,7 +62,7 @@ class Measurement(AgBase):
     if comment is not None:
       measurement_details['comment'] = comment
 
-    result = self.__api_call('post', 'measurements/', measurement_details)
+    result = AgBase.api_call(self,'post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -92,7 +95,7 @@ class Measurement(AgBase):
 
 
   def remove_measurement(self, measurement):
-    result = self.__api_call('delete', 'measurements/{}'.format(measurement.id))
+    result = AgBase.api_call(self,'delete', 'measurements/{}'.format(measurement.id))
 
     json_response = result.json()
 
@@ -110,7 +113,7 @@ class Measurement(AgBase):
     if algorithm is not None:
       params['algorithm'] = algorithm
 
-    result = self.__api_call('get', 'measurements/', None, params)
+    result = AgBase.api_call(self,'get', 'measurements/', None, params)
 
     if result.status_code != 200:
       return None
@@ -136,7 +139,7 @@ class Measurement(AgBase):
 
   def upload_measurement_list(self, measurement_list):
 
-    result = self.__api_call('post', 'measurements/', measurement_list.get_json())
+    result = AgBase.api_call(self,'post', 'measurements/', measurement_list.get_json())
 
     if result.status_code != 200:
       return None

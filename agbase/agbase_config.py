@@ -1,7 +1,7 @@
 __author__ = 'Tim Molteno, Mark Butler'
 
 #server address and port
-defaultServerIp = 'https://agbase-test.elec.ac.nz/api/'
+defaultServerIp = 'https://debian.elec.ac.nz:8443/api/'
 
 #is the certificate signed by the correct authority
 defaultSigning = False

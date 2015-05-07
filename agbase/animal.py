@@ -50,6 +50,7 @@ class AnimalAPI:
             self.ab.log("Cannot add animal to herd on different farm!")
             return False
 
+<<<<<<< HEAD
         result = self.ab.api_call('put', 'animals/{}'.format(animal.id), {'herdId': herd.id})
 
         json_response = result.json()

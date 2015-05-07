@@ -16,11 +16,11 @@ __author__ = 'John'
 class MeasurementCategory(AgBase):
   def __init__(self):
     AgBase.__init__(self)
-    #self.__api_call = AgBase.api_call
-
+    self.logging = False #= AgBase.logging
+    
   def create_measurement_category(self, name):
 
-    result = self.__api_call('post', 'measurement-categories/', {'name': name})
+    result = AgBase.api_call(self,'post', 'measurement-categories/', {'name': name})
 
     if result.status_code != 200:
       return None
@@ -35,7 +35,7 @@ class MeasurementCategory(AgBase):
 
 
   def remove_measurement_category(self, category):
-    result = self.__api_call('delete', 'measurement-categories/{}'.format(category.id))
+    result = AgBase.api_call(self,'delete', 'measurement-categories/{}'.format(category.id))
 
     json_response = result.json()
 
@@ -49,7 +49,7 @@ class MeasurementCategory(AgBase):
 
   def get_measurement_categories(self):
 
-    result = self.__api_call('get', 'measurement-categories/')
+    result = AgBase.api_call(self,'get', 'measurement-categories/')
 
     if result.status_code != 200:
       return None
@@ -67,7 +67,7 @@ class MeasurementCategory(AgBase):
 
 
   def get_measurement_category(self, categoryId):
-    result = self.__api_call('get', 'measurement-categories/{}'.format(categoryId))
+    result = AgBase.api_call(self,'get', 'measurement-categories/{}'.format(categoryId))
 
     if result.status_code != 200:
       return None
