@@ -221,20 +221,20 @@ class TestAgBase(TestCommon):
 
     def test_measurements(self):
 
-        test_farm = self.agbase.create_farm('Animal Test Farm')
+        test_farm = self.farm.create_farm('Animal Test Farm')
         test_eid = "AN-EID-FOR_TESTING"
-        test_animal = self.agbase.create_animal(test_farm, test_eid)
-        test_category = self.agbase.create_measurement_category('Algorithm Test Category')
-        test_algorithm = self.agbase.create_algorithm('Test Algorithm', test_category)
+        test_animal = self.animal.create_animal(test_farm, test_eid)
+        test_category = self.measurement_category.create_measurement_category('Algorithm Test Category')
+        test_algorithm = self.algorithm.create_algorithm('Test Algorithm', test_category)
 
-        measurement = self.agbase.create_measurement(test_animal, test_algorithm, self.user, time.strftime("%c"), 0.3344)
+        measurement = self.measurement.create_measurement(test_animal, test_algorithm, self.user, time.strftime("%c"), 0.3344)
 
         if measurement is None:
             self.fail()
 
         print('created measurement with id {}'.format(measurement.id))
 
-        animal_measurements = self.agbase.get_measurements_for_animal(test_animal)
+        animal_measurements = self.measurement.get_measurements_for_animal(test_animal)
 
         if animal_measurements[0].id != measurement.id:
             self.fail()

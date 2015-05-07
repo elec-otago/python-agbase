@@ -14,9 +14,12 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Herd(AgBase):  
+class Herd(AgBase):
+  def __init__(self):
+    AgBase.__init__(self)
+    self.logging = False #= AgBase.logging
   def create_herd(self, farm, name):
-    result = self.__api_call('post', 'herds/', {'name': name, 'farmId': farm.id})
+    result = AgBase.api_call(self,'post', 'herds/', {'name': name, 'farmId': farm.id})
 
     if result.status_code != 200:
       return None
@@ -29,7 +32,7 @@ class Herd(AgBase):
 
 
   def remove_herd(self, herd):
-    result = self.__api_call('delete','herds/{}'.format(herd.id))
+    result = AgBase.api_call(self,'delete','herds/{}'.format(herd.id))
 
     self.__agbase_log(result.json()[u'message'])
 
@@ -46,7 +49,7 @@ class Herd(AgBase):
     if farm is not None:
       params = {'farm': farm.id}
 
-    result = self.__api_call('get', 'herds/', None, params)
+    result = AgBase.api_call(self,'get', 'herds/', None, params)
 
     if result.status_code != 200:
       return None

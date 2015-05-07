@@ -15,9 +15,12 @@ __author__ = 'John'
 
 
 class Algorithm(AgBase):  
+  def __init__(self):
+    AgBase.__init__(self)
+    self.logging = False #= AgBase.logging
   def create_algorithm(self, name, measurement_category):
 
-    result = self.__api_call('post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
+    result = AgBase.api_call(self,'post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
 
     if result.status_code != 200:
       return None
@@ -32,7 +35,7 @@ class Algorithm(AgBase):
 
 
   def remove_algorithm(self, algorithm):
-    result = self.__api_call('delete', 'algorithms/{}'.format(algorithm.id))
+    result = AgBase.api_call(self,'delete', 'algorithms/{}'.format(algorithm.id))
 
     json_response = result.json()
 
@@ -46,7 +49,7 @@ class Algorithm(AgBase):
 
   def get_algorithms(self, measurement_category=None):
 
-    result = self.__api_call('get', 'algorithms/')
+    result = AgBase.api_call(self,'get', 'algorithms/')
 
     if result.status_code != 200:
       return None
@@ -66,7 +69,7 @@ class Algorithm(AgBase):
 
 
   def get_algorithm(self, algorithmId):
-    result = self.__api_call('get', 'algorithms/{}'.format(algorithmId))
+    result = AgBase.api_call(self,'get', 'algorithms/{}'.format(algorithmId))
 
     if result.status_code != 200:
       return None

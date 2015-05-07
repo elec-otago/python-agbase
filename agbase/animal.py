@@ -14,7 +14,10 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Animal(AgBase):  
+class Animal(AgBase):
+    def __init__(self):
+      AgBase.__init__(self)
+      self.logging = False #= AgBase.logging
     def create_animal(self, farm, eid, vid=None, herd=None):
         animal_details = {'farmId': farm.id, 'eid': eid}
 
@@ -24,7 +27,7 @@ class Animal(AgBase):
         if herd is not None:
             animal_details['herdId'] = herd.id
 
-        result = self.__api_call('post', 'animals/', animal_details)
+        result = AgBase.api_call(self,'post', 'animals/', animal_details)
 
         if result.status_code != 200:
             return None
@@ -47,7 +50,7 @@ class Animal(AgBase):
             self.__agbase_log("Cannot add animal to herd on different farm!")
             return False
 
-        result = self.__api_call('put', 'animals/{}'.format(animal.id), {'herdId': herd.id})
+        result = AgBase.api_call(self,'put', 'animals/{}'.format(animal.id), {'herdId': herd.id})
 
         json_response = result.json()
 
@@ -62,7 +65,7 @@ class Animal(AgBase):
 
 
     def remove_animal(self, animal):
-        result = self.__api_call('delete', 'animals/{}'.format(animal.id))
+        result = AgBase.api_call(self,'delete', 'animals/{}'.format(animal.id))
 
         json_response = result.json()
 
@@ -83,7 +86,7 @@ class Animal(AgBase):
         elif farm is not None:
             params = {'farm': farm.id}
 
-        result = self.__api_call('get', 'animals/')
+        result = AgBase.api_call(self,'get', 'animals/')
 
         if result.status_code != 200:
             return None
@@ -108,7 +111,7 @@ class Animal(AgBase):
 
         params = {'farm': farm.id, 'eid': urllib.quote_plus(eid)}
 
-        result = self.__api_call('get', 'animals/', None, params)
+        result = AgBase.api_call(self,'get', 'animals/', None, params)
 
         if result.status_code != 200:
             json_animals = json_response[u'animals']
@@ -134,7 +137,7 @@ class Animal(AgBase):
 
         params = {'farm': farm.id, 'vid': urllib.quote_plus(str(vid))}
 
-        result = self.__api_call('get', 'animals/', None, params)
+        result = AgBase.api_call(self,'get', 'animals/', None, params)
 
         if result.status_code != 200:
             return None
@@ -157,7 +160,7 @@ class Animal(AgBase):
 
     def update_animal_vid(self, animal, vid):
 
-        result = self.__api_call('put', 'animals/{}'.format(animal.id), {'vid': str(vid)})
+        result = AgBase.api_call(self,'put', 'animals/{}'.format(animal.id), {'vid': str(vid)})
 
         json_response = result.json()
 
