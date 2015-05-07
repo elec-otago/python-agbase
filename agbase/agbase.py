@@ -184,6 +184,3 @@ class AgBase:
 
     return users
 
-
- 
-  
