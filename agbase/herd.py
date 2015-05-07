@@ -14,17 +14,17 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Herd(AgBase):
-  def __init__(self):
-    AgBase.__init__(self)
-    self.logging = False #= AgBase.logging
+class HerdAPI:
+  def __init__(self, ab):
+    self.ab = ab
+    
   def create_herd(self, farm, name):
-    result = AgBase.api_call(self,'post', 'herds/', {'name': name, 'farmId': farm.id})
+    result = self.ab.api_call(self,'post', 'herds/', {'name': name, 'farmId': farm.id})
 
     if result.status_code != 200:
       return None
 
-    self.__agbase_log(result.json()[u'message'])
+    self.ab.__agbase_log(result.json()[u'message'])
 
     json_response = result.json()[u'herd']
 
@@ -32,9 +32,9 @@ class Herd(AgBase):
 
 
   def remove_herd(self, herd):
-    result = AgBase.api_call(self,'delete','herds/{}'.format(herd.id))
+    result = self.ab.api_call(self,'delete','herds/{}'.format(herd.id))
 
-    self.__agbase_log(result.json()[u'message'])
+    self.ab.__agbase_log(result.json()[u'message'])
 
     if result.status_code != 200:
       return False
@@ -49,7 +49,7 @@ class Herd(AgBase):
     if farm is not None:
       params = {'farm': farm.id}
 
-    result = AgBase.api_call(self,'get', 'herds/', None, params)
+    result = self.ab.api_call(self,'get', 'herds/', None, params)
 
     if result.status_code != 200:
       return None

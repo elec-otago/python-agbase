@@ -14,13 +14,13 @@ if os.getenv('MOOGLE_RUNNING_UNIT_TESTS', '0') == '1':
 __author__ = 'John'
 
 
-class Algorithm(AgBase):  
-  def __init__(self):
-    AgBase.__init__(self)
-    self.logging = False #= AgBase.logging
+class AlgorithmAPI:  
+  def __init__(self, ab):
+    self.ab = ab
+    
   def create_algorithm(self, name, measurement_category):
 
-    result = AgBase.api_call(self,'post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
+    result = self.ab.api_call(self,'post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
 
     if result.status_code != 200:
       return None
@@ -29,17 +29,17 @@ class Algorithm(AgBase):
 
     json_algorithm = json_response[u'algorithm']
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.__agbase_log(json_response[u'message'])
 
     return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'])
 
 
   def remove_algorithm(self, algorithm):
-    result = AgBase.api_call(self,'delete', 'algorithms/{}'.format(algorithm.id))
+    result = self.ab.api_call(self,'delete', 'algorithms/{}'.format(algorithm.id))
 
     json_response = result.json()
 
-    self.__agbase_log(json_response[u'message'])
+    self.ab.__agbase_log(json_response[u'message'])
 
     if result.status_code != 200:
       return False
@@ -49,7 +49,7 @@ class Algorithm(AgBase):
 
   def get_algorithms(self, measurement_category=None):
 
-    result = AgBase.api_call(self,'get', 'algorithms/')
+    result = self.ab.api_call(self,'get', 'algorithms/')
 
     if result.status_code != 200:
       return None
@@ -69,7 +69,7 @@ class Algorithm(AgBase):
 
 
   def get_algorithm(self, algorithmId):
-    result = AgBase.api_call(self,'get', 'algorithms/{}'.format(algorithmId))
+    result = self.ab.api_call(self,'get', 'algorithms/{}'.format(algorithmId))
 
     if result.status_code != 200:
       return None

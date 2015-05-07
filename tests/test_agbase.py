@@ -1,11 +1,11 @@
 import unittest
 from agbase.agbase import AgBase
-from agbase.algorithm import Algorithm
-from agbase.animal import Animal
-from agbase.farm import Farm
-from agbase.herd import Herd
-from agbase.measurement import Measurement
-from agbase.measurement_category import MeasurementCategory
+from agbase.algorithm import AlgorithmAPI
+from agbase.animal import AnimalAPI
+from agbase.farm import FarmAPI
+from agbase.herd import HerdAPI
+from agbase.measurement import MeasurementAPI
+from agbase.measurement_category import MeasurementCategoryAPI
 import time
 from test_common import TestCommon
 
@@ -18,12 +18,12 @@ class TestAgBase(TestCommon):
         print('TestAgBase.setUp')
         super(self.__class__, self).setUp()
         self.agbase = AgBase()
-        self.algorithm = Algorithm()
-        self.animal = Animal()
-        self.farm = Farm()
-        self.herd = Herd()
-        self.measurement = Measurement()
-        self.measurement_category = MeasurementCategory()
+        self.algorithm = AlgorithmAPI(self.agbase)
+        self.animal = AnimalAPI(self.agbase)
+        self.farm = FarmAPI(self.agbase)
+        self.herd = HerdAPI(self.agbase)
+        self.measurement = MeasurementAPI(self.agbase)
+        self.measurement_category = MeasurementCategoryAPI(self.agbase)
 
         self.agbase.set_logging_on(True)
 

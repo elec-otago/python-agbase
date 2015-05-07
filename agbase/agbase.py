@@ -47,7 +47,7 @@ class AgBase(object):
 
     if not authenticated:
       return 0
-
+    
     http_call = getattr(self.session, http_verb)
 
     if data is None and query_params is None:
