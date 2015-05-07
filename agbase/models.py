@@ -76,6 +76,8 @@ class Measurement:
         self.algorithm_id = json_measurement[u'AlgorithmId']
         self.animal_id = json_measurement[u'AnimalId']
 
+    def __str__(self):
+        return "%f, %f, %f, %f, %f" % (self.value1, self.value2, self.value3, self.value4, self.value5)
 
 class Animal:
 
