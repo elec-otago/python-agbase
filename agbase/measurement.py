@@ -62,7 +62,7 @@ class MeasurementAPI:
     if comment is not None:
       measurement_details['comment'] = comment
 
-    result = self.ab.api_call(self,'post', 'measurements/', measurement_details)
+    result = self.ab.api_call('post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -95,7 +95,7 @@ class MeasurementAPI:
 
 
   def remove_measurement(self, measurement):
-    result = self.ab.api_call(self,'delete', 'measurements/{}'.format(measurement.id))
+    result = self.ab.api_call('delete', 'measurements/{}'.format(measurement.id))
 
     json_response = result.json()
 
@@ -113,7 +113,7 @@ class MeasurementAPI:
     if algorithm is not None:
       params['algorithm'] = algorithm
 
-    result = self.ab.api_call(self,'get', 'measurements/', None, params)
+    result = self.ab.api_call('get', 'measurements/', None, params)
 
     if result.status_code != 200:
       return None
@@ -139,7 +139,7 @@ class MeasurementAPI:
 
   def upload_measurement_list(self, measurement_list):
 
-    result = self.ab.api_call(self,'post', 'measurements/', measurement_list.get_json())
+    result = self.ab.api_call('post', 'measurements/', measurement_list.get_json())
 
     if result.status_code != 200:
       return None
