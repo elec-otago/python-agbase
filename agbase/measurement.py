@@ -1,3 +1,11 @@
+ # Agbase - Measurement Path
+ # 
+ # Copyright (c) 2015. Elec Research.
+ # 
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/
+
 import agbase_config as config
 from models import *
 from measurement_list import *
@@ -18,14 +26,14 @@ class MeasurementAPI:
   
   def __init__(self, ab):
     self.ab = ab
-      
+    #self.measurement = Measurement
   '''
     Upload a single measurement model object
     TODO. This is not implemented.
   '''
-  def upload_measurement(self, farm, measurement):
+  def upload_measurement(self, measurement_details):
     
-    measurement_details = measurement.to_json()
+   # measurement_details = measurement.to_json()
     # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
     result = self.ab.api_call('post', 'measurements/', measurement_details)
@@ -39,7 +47,7 @@ class MeasurementAPI:
 
     self.ab.log(json_response[u'message'])
 
-    result_measurement = Measurement()
+    result_measurement = Measurement(None)
 
     result_measurement.init_with_json(json_measurement)
 
@@ -80,12 +88,13 @@ class MeasurementAPI:
     return result_measurement
 
 
-  def create_measurement(self, animal, algorithm, user, time_stamp, value1, value2=None, value3=None, value4=None, value5=None, comment=None):
+  def create_measurement(self, animal, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment ):
+    m = Measurement(None).to_json_animal(animal,algorithm,user,time_stamp, w05, w25, w50, w75, w95, comment )
+    
+    #measurement_details = {'farmId':animal.farm_id, 'animalId': animal.id, 'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
-    measurement_details = {'farmId':animal.farm_id, 'animalId': animal.id, 'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
-
-    return self.__create_measurement_with_details(measurement_details, value2, value3, value4, value5, comment)
-
+    #return self.__create_measurement_with_details(measurement_details, value2, value3, value4, value5, comment)
+    return self.upload_measurement(m)
 
   def create_measurement_for_eid(self, eid, farm, algorithm, user, time_stamp, value1, value2=None, value3=None, value4=None, value5=None, comment=None):
 
@@ -126,7 +135,7 @@ class MeasurementAPI:
 
     for json_measurement in json_measurements:
 
-      new_measurement = Measurement()
+      new_measurement = Measurement(None)
       new_measurement.init_with_json(json_measurement)
       measurements.append(new_measurement)
 

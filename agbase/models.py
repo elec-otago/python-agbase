@@ -1,4 +1,12 @@
-__author__ = 'Tim Molteno, Mark Butler'
+ # Models for Agbase API Library
+ # 
+ # Copyright (c) 2015. Elec Research.
+ # 
+ # This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/
+
+__author__ = 'Tim Molteno, Mark Butler, John Harborne'
 
 # Utility to create a float from json where NaN is returned when the object doesn't exist
 def json_float(x):
@@ -82,11 +90,39 @@ class Measurement:
         self.animal_id = json_measurement[u'AnimalId']
 
 
-    def to_json(self):
-        # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
-        John to finish
+    def to_json_animal(self, animal, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment ):
+        measurement_details = {'animalId': animal.id,
+                               'farmId':animal.farm_id,
+                               'algorithmId': algorithm.id,
+                               'userId': user.id,
+                               'timeStamp': time_stamp}
         
+        if(w05 is  None and w25 is  None and w50 is  None and w75 is  None and w95 is  None):
+            print "w:",w05,w25,w50,w75,w95
+            print "w05,w25,w50,w75,w95 are all null"
+            return
         
+        if w05 is not None:
+            measurement_details['value1'] = w05
+        
+        if w25 is not None:
+            measurement_details['value2'] = w25
+
+        if w50 is not None:
+            measurement_details['value3'] = w50
+
+        if w75 is not None:
+            measurement_details['value4'] = w75
+
+        if w95 is not None:
+            measurement_details['value5'] = w95
+
+        if comment is not None:
+            measurement_details['comment'] = comment
+    
+        print measurement_details
+        return measurement_details
+
     def __str__(self):
         return "%f, %f, %f, %f, %f" % (self.w05, self.w25, self.w50, self.w75, self.w95)
 
