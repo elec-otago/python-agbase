@@ -1,5 +1,11 @@
 __author__ = 'Tim Molteno, Mark Butler'
 
+# Utility to create a float from json where NaN is returned when the object doesn't exist
+def json_float(x):
+    if x == None:
+      return float('NaN')
+    return float(x)
+
 
 class MeasurementCategory:
 
@@ -45,11 +51,6 @@ class Herd:
         self.name = name
         self.farm_id = farm_id
         self.id = id
-
-def json_float(x):
-    if x == None:
-      return float('NaN')
-    return float(x)
 
 class Measurement:
 
