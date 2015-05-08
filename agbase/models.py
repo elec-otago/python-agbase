@@ -46,16 +46,20 @@ class Herd:
         self.farm_id = farm_id
         self.id = id
 
+def json_float(x):
+    if x == None:
+      return float('NaN')
+    return float(x)
 
 class Measurement:
 
-    def __init__(self):
+    def __init__(self, median):
         self.id = -1
-        self.value1 = 0
-        self.value2 = 0
-        self.value3 = 0
-        self.value4 = 0
-        self.value5 = 0
+        self.w05 = 0
+        self.w25 = 0
+        self.w50 = median
+        self.w75 = 0
+        self.w95 = 0
         self.time_stamp = None
         self.comment = ""
         self.user_id = -1
@@ -65,19 +69,25 @@ class Measurement:
 
     def init_with_json(self, json_measurement):
         self.id = json_measurement[u'id']
-        self.value1 = json_measurement[u'value1']
-        self.value2 = json_measurement[u'value2']
-        self.value3 = json_measurement[u'value3']
-        self.value4 = json_measurement[u'value4']
-        self.value5 = json_measurement[u'value5']
+        self.w05 = json_float(json_measurement[u'value1'])
+        self.w25 = json_float(json_measurement[u'value2'])
+        self.w50 = json_float(json_measurement[u'value3'])
+        self.w75 = json_float(json_measurement[u'value4'])
+        self.w95 = json_float(json_measurement[u'value5'])
         self.time_stamp = json_measurement[u'timeStamp']
         self.comment = json_measurement[u'comment']
         self.user_id = json_measurement[u'UserId']
         self.algorithm_id = json_measurement[u'AlgorithmId']
         self.animal_id = json_measurement[u'AnimalId']
 
+
+    def to_json(self):
+        # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
+        John to finish
+        
+        
     def __str__(self):
-        return "%f, %f, %f, %f, %f" % (self.value1, self.value2, self.value3, self.value4, self.value5)
+        return "%f, %f, %f, %f, %f" % (self.w05, self.w25, self.w50, self.w75, self.w95)
 
 class Animal:
 
