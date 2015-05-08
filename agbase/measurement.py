@@ -28,7 +28,7 @@ class MeasurementAPI:
     measurement_details = measurement.to_json()
     # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
-    result = self.ab.api_call(self,'post', 'measurements/', measurement_details)
+    result = self.ab.api_call('post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
       return None
@@ -68,7 +68,7 @@ class MeasurementAPI:
       return None
 
     json_response = result.json()
-
+    self.ab.log("============================ {}".format(json_response))
     json_measurement = json_response[u'measurement']
 
     self.ab.log(json_response[u'message'])
@@ -82,7 +82,7 @@ class MeasurementAPI:
 
   def create_measurement(self, animal, algorithm, user, time_stamp, value1, value2=None, value3=None, value4=None, value5=None, comment=None):
 
-    measurement_details = {'animalId': animal.id, 'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
+    measurement_details = {'farmId':animal.farm_id, 'animalId': animal.id, 'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
 
     return self.__create_measurement_with_details(measurement_details, value2, value3, value4, value5, comment)
 

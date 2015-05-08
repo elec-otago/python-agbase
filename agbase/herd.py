@@ -19,12 +19,12 @@ class HerdAPI:
     self.ab = ab
     
   def create_herd(self, farm, name):
-    result = self.ab.api_call(self,'post', 'herds/', {'name': name, 'farmId': farm.id})
+    result = self.ab.api_call('post', 'herds/', {'name': name, 'farmId': farm.id})
 
     if result.status_code != 200:
       return None
 
-    self.ab.__agbase_log(result.json()[u'message'])
+    self.ab.log(result.json()[u'message'])
 
     json_response = result.json()[u'herd']
 
@@ -32,9 +32,9 @@ class HerdAPI:
 
 
   def remove_herd(self, herd):
-    result = self.ab.api_call(self,'delete','herds/{}'.format(herd.id))
+    result = self.ab.api_call('delete','herds/{}'.format(herd.id))
 
-    self.ab.__agbase_log(result.json()[u'message'])
+    self.ab.log(result.json()[u'message'])
 
     if result.status_code != 200:
       return False
@@ -49,7 +49,7 @@ class HerdAPI:
     if farm is not None:
       params = {'farm': farm.id}
 
-    result = self.ab.api_call(self,'get', 'herds/', None, params)
+    result = self.ab.api_call('get', 'herds/', None, params)
 
     if result.status_code != 200:
       return None

@@ -20,7 +20,7 @@ class AlgorithmAPI:
     
   def create_algorithm(self, name, measurement_category):
 
-    result = self.ab.api_call(self,'post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
+    result = self.ab.api_call('post', 'algorithms/', {'name': name, 'measurementCategoryId': measurement_category.id})
 
     if result.status_code != 200:
       return None
@@ -29,17 +29,17 @@ class AlgorithmAPI:
 
     json_algorithm = json_response[u'algorithm']
 
-    self.ab.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'])
 
 
   def remove_algorithm(self, algorithm):
-    result = self.ab.api_call(self,'delete', 'algorithms/{}'.format(algorithm.id))
+    result = self.ab.api_call('delete', 'algorithms/{}'.format(algorithm.id))
 
     json_response = result.json()
 
-    self.ab.__agbase_log(json_response[u'message'])
+    self.ab.log(json_response[u'message'])
 
     if result.status_code != 200:
       return False
@@ -49,7 +49,7 @@ class AlgorithmAPI:
 
   def get_algorithms(self, measurement_category=None):
 
-    result = self.ab.api_call(self,'get', 'algorithms/')
+    result = self.ab.api_call('get', 'algorithms/')
 
     if result.status_code != 200:
       return None
@@ -69,7 +69,7 @@ class AlgorithmAPI:
 
 
   def get_algorithm(self, algorithmId):
-    result = self.ab.api_call(self,'get', 'algorithms/{}'.format(algorithmId))
+    result = self.ab.api_call('get', 'algorithms/{}'.format(algorithmId))
 
     if result.status_code != 200:
       return None

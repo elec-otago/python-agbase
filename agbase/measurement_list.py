@@ -38,7 +38,8 @@ class MeasurementList:
         if len(self.measurements) <= 0:
             return None
 
-        json_list = {'animalId': self.animal.id,
+        json_list = {'farmId':self.animal.farm_id,
+                     'animalId': self.animal.id,
                      'algorithmId': self.algorithm.id,
                      'userId': self.user.id,
                      'measurements': self.measurements}

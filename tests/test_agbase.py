@@ -170,7 +170,7 @@ class TestAgBase(TestCommon):
         if not deleted:
             self.fail()
 
-        self.agbase.remove_measurement_category(test_category)
+        self.measurement_category.remove_measurement_category(test_category)
 
 
     def test_animals(self):

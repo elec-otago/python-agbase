@@ -39,7 +39,6 @@ class AgBase(object):
 
 
     if self.authenticationTime == 0 or datetime.datetime.now() > self.expiry_time:
-
       if self.authenticationTime != 0:
         self.log('Token Expired - reauthenticating')
 
