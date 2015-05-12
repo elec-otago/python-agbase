@@ -89,13 +89,11 @@ class Measurement:
         self.algorithm_id = json_measurement[u'AlgorithmId']
         self.animal_id = json_measurement[u'AnimalId']
 
-
-    def to_json_animal(self, animal, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment ):
-        measurement_details = {'animalId': animal.id,
-                               'farmId':animal.farm_id,
-                               'algorithmId': algorithm.id,
-                               'userId': user.id,
-                               'timeStamp': time_stamp}
+    def to_json(self, measurement_details,farm_id,algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment):
+        measurement_details['farmId'] = farm_id
+        measurement_details['algorithmId'] = algorithm.id
+        measurement_details['userId'] = user.id
+        measurement_details['timeStamp'] = time_stamp
         
         if(w05 is  None and w25 is  None and w50 is  None and w75 is  None and w95 is  None):
             print "w:",w05,w25,w50,w75,w95
@@ -122,6 +120,15 @@ class Measurement:
     
         print measurement_details
         return measurement_details
+
+    def to_json_animal(self, animal, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment ):
+        measurement_details = {'animalId':animal.id}
+        return self.to_json(measurement_details, animal.farm_id, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment)
+    
+    
+    def to_json_eid(self, animalEid, farm, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment ):
+        measurement_details = {'eid':animalEid}
+        return self.to_json(measurement_details,farm.id, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment )
 
     def __str__(self):
         return "%f, %f, %f, %f, %f" % (self.w05, self.w25, self.w50, self.w75, self.w95)

@@ -252,15 +252,15 @@ class TestAgBase(TestCommon):
         if not deleted:
             self.fail()
 
-        #eid_measurement = self.measurement.create_measurement_for_eid(test_eid, test_farm, test_algorithm, self.user, time.strftime("%c"), 0.3344)
+        eid_measurement = self.measurement.create_measurement_for_eid(test_animal.eid,test_farm, test_algorithm, self.user, time.strftime("%c"), None, None, 0.3344,None,None,None)
 
-        #if eid_measurement is None:
-            #self.fail()
+        if eid_measurement is None:
+            self.fail()
 
-        #if eid_measurement.animal_id != test_animal.id:
-            #self.fail()
+        if eid_measurement.animal_id != test_animal.id:
+            self.fail()
 
-        #self.measurement.remove_measurement(eid_measurement)
+        self.measurement.remove_measurement(eid_measurement)
 
         self.animal.remove_animal(test_animal)
         self.farm.remove_farm(test_farm)
