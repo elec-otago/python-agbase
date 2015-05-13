@@ -85,9 +85,9 @@ class Measurement:
         self.w95 = json_float(json_measurement[u'value5'])
         self.time_stamp = json_measurement[u'timeStamp']
         self.comment = json_measurement[u'comment']
-        self.user_id = json_measurement[u'UserId']
-        self.algorithm_id = json_measurement[u'AlgorithmId']
-        self.animal_id = json_measurement[u'AnimalId']
+        self.user_id = json_measurement[u'userId']
+        self.algorithm_id = json_measurement[u'algorithmId']
+        self.animal_id = json_measurement[u'animalId']
 
     def to_json(self, measurement_details,farm_id,algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment):
         measurement_details['farmId'] = farm_id
@@ -132,6 +132,22 @@ class Measurement:
 
     def __str__(self):
         return "%f, %f, %f, %f, %f" % (self.w05, self.w25, self.w50, self.w75, self.w95)
+    
+    def __repr__(self):
+        r = {}
+        r["id"] = self.id
+        r["time_stamp"] = self.time_stamp
+        r["comment"] = self.comment
+        r["user_id"] = self.user_id
+        r["algorithm_id"] = self.algorithm_id
+        r["animal_id"] = self.animal_id
+        r["w05"] = self.w05
+        r["w25"] = self.w25
+        r["w50"] = self.w50
+        r["w75"] = self.w75
+        r["w95"] = self.w95
+        return r
+
 
 class Animal:
 

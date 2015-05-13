@@ -14,6 +14,7 @@ from agbase.farm import FarmAPI
 from agbase.herd import HerdAPI
 from agbase.measurement import MeasurementAPI
 from agbase.measurement_category import MeasurementCategoryAPI
+import pprint
 import time
 from test_common import TestCommon
 
@@ -25,6 +26,7 @@ class TestAgBase(TestCommon):
     def setUp(self):
         print('TestAgBase.setUp')
         super(self.__class__, self).setUp()
+        self.pp = pprint.PrettyPrinter(indent=4)
         self.agbase = AgBase()
         self.algorithm = AlgorithmAPI(self.agbase)
         self.animal = AnimalAPI(self.agbase)
@@ -259,7 +261,10 @@ class TestAgBase(TestCommon):
 
         if eid_measurement.animal_id != test_animal.id:
             self.fail()
-
+        #self.pp.pprint(repr(eid_measurement))
+        for keys,values in eid_measurement.__repr__().items():
+            print(keys)
+            print(values)
         self.measurement.remove_measurement(eid_measurement)
 
         self.animal.remove_animal(test_animal)

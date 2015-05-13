@@ -71,7 +71,7 @@ class AlgorithmAPI:
     for json_algorithm in json_algorithms:
       algorithms.append(Algorithm(json_algorithm[u'name'],
                     json_algorithm[u'id'],
-                    json_algorithm[u'MeasurementCategoryId']))
+                    json_algorithm[u'measurementCategoryId']))
 
     return algorithms
 
@@ -84,4 +84,4 @@ class AlgorithmAPI:
 
     json_algorithm = result.json()[u'algorithm']
 
-    return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'], json_algorithm[u'MeasurementCategoryId'])
+    return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'], json_algorithm[u'measurementCategoryId'])

@@ -49,8 +49,8 @@ class AnimalAPI:
         return Animal(json_animal[u'id'],
             json_animal[u'eid'],
             json_animal[u'vid'],
-            json_animal[u'HerdId'],
-            json_animal[u'FarmId'])
+            json_animal[u'herdId'],
+            json_animal[u'farmId'])
 
 
     def set_animal_herd(self, animal, herd):
@@ -108,8 +108,8 @@ class AnimalAPI:
             animals.append(Animal(json_animal[u'id'],
                     json_animal[u'eid'],
                     json_animal[u'vid'],
-                    json_animal[u'HerdId'],
-                    json_animal[u'FarmId']))
+                    json_animal[u'herdId'],
+                    json_animal[u'farmId']))
 
         return animals
 
@@ -136,8 +136,8 @@ class AnimalAPI:
         return Animal( json_animal[u'id'],
                 json_animal[u'eid'],
                 json_animal[u'vid'],
-                json_animal[u'HerdId'],
-                json_animal[u'FarmId'])
+                json_animal[u'herdId'],
+                json_animal[u'farmId'])
 
 
     '''
@@ -164,8 +164,8 @@ class AnimalAPI:
         return Animal( json_animal[u'id'],
                 json_animal[u'eid'],
                 json_animal[u'vid'],
-                json_animal[u'HerdId'],
-                json_animal[u'FarmId'])
+                json_animal[u'herdId'],
+                json_animal[u'farmId'])
 
 
     def update_animal_vid(self, animal, vid):

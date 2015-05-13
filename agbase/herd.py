@@ -36,7 +36,7 @@ class HerdAPI:
 
     json_response = result.json()[u'herd']
 
-    return Herd(json_response[u'name'], json_response[u'id'], json_response[u'FarmId'])
+    return Herd(json_response[u'name'], json_response[u'id'], json_response[u'farmId'])
 
 
   def remove_herd(self, herd):
