@@ -20,16 +20,31 @@ class MeasurementCategory:
     def __init__(self, name, id=-1):
         self.name = name
         self.id = id
-
+    
+    def to_json(self):
+        return {'name':self.name,'id':self.id}
 
 class Algorithm:
 
-    def __init__(self, name, id=-1, category_id=-1):
-        self.name = name
-        self.id = id
-        self.category_id = category_id
+    def __init__(self):
+        self.name = ""
+        self.id = -1
+        self.category_id  = -1
+        
+    def init_with_json(self,algorithm_json):
+        self.name = algorithm_json[u'name']
+        self.id = algorithm_json[u'id']
+        print algorithm_json
+        if hasattr(algorithm_json,u'measurementCategoryId'):
+            self.category_id  = algorithm_json[u'measurementCategoryId'] 
 
-
+    def to_json(self):
+        algorithm_json = {}
+        algorithm_json[u'name'] = self.name
+        algorithm_json[u'id'] = self.id
+        algorithm_json[u'measurementCategoryId'] = self.category_id 
+        return algorithm_json
+        
 class User:
 
     def __init__(self, first_name, last_name, email, id=-1):
@@ -37,7 +52,6 @@ class User:
         self.last_name = last_name
         self.email = email
         self.id = id
-
 
 class Role:
 
@@ -52,6 +66,8 @@ class Farm:
         self.name = name
         self.id = id
 
+    def to_json(self):
+        return {'name':self.name,'id':self.id}
 
 class Herd:
 
@@ -59,6 +75,9 @@ class Herd:
         self.name = name
         self.farm_id = farm_id
         self.id = id
+    
+    def to_json(self):
+        return {'name':self.name, 'farm_id':self.farm_id, 'id':self.id}
 
 class Measurement:
 

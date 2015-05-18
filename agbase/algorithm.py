@@ -38,8 +38,10 @@ class AlgorithmAPI:
     json_algorithm = json_response[u'algorithm']
 
     self.ab.log(json_response[u'message'])
-
-    return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'])
+    a = Algorithm()
+    a.init_with_json(json_algorithm)
+    print "a :::::::::::::::::::::::::::: ", a.to_json()
+    return a
 
 
   def remove_algorithm(self, algorithm):
@@ -69,9 +71,10 @@ class AlgorithmAPI:
     algorithms = []
 
     for json_algorithm in json_algorithms:
-      algorithms.append(Algorithm(json_algorithm[u'name'],
-                    json_algorithm[u'id'],
-                    json_algorithm[u'measurementCategoryId']))
+      a = Algorithm()  
+      a.init_with_json(json_algorithm)
+      print ">>>>>>>for loop a>>>>> ", a.to_json() 
+      algorithms.append(a)
 
     return algorithms
 
@@ -83,5 +86,6 @@ class AlgorithmAPI:
       return None
 
     json_algorithm = result.json()[u'algorithm']
-
-    return Algorithm(json_algorithm[u'name'], json_algorithm[u'id'], json_algorithm[u'measurementCategoryId'])
+    a = Algorithm()
+    a.init_with_json(json_algorithm)
+    return a

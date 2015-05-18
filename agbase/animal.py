@@ -88,12 +88,17 @@ class AnimalAPI:
 
         params = None
 
-        if herd is not None:
-            params = {'herd': herd.id}
-        elif farm is not None:
+        
+        if farm is not None:
             params = {'farm': farm.id}
-
-        result = self.ab.api_call('get', 'animals/')
+            if herd is not None:
+                params['herd'] = herd.id
+        else:
+            print "Must have a farm to get a herd"
+            return
+        
+        print "----------------params-------------", params
+        result = self.ab.api_call('get', 'animals/',None,params)
 
         if result.status_code != 200:
             return None

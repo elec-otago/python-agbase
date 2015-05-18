@@ -156,14 +156,14 @@ class TestAgBase(TestCommon):
 
         test_category = self.measurement_category.create_measurement_category('Algorithm Test Category')
         test_algorithm = self.algorithm.create_algorithm('Test Algorithm', test_category)
-
+        print "test_algorithm", test_algorithm.to_json()
         if test_algorithm is None:
             self.fail()
 
         print('created algorithm {} with id: {}'.format(test_algorithm.name, test_algorithm.id))
 
         single_query_algorithm = self.algorithm.get_algorithm(test_algorithm.id)
-
+        print "single_query_algorithm", single_query_algorithm.to_json()
         if test_algorithm.id != single_query_algorithm.id:
             self.fail()
 
@@ -201,7 +201,8 @@ class TestAgBase(TestCommon):
 
         if result is None:
             self.fail()
-
+        print "============farm==========",test_farm.to_json()
+        print "============herd==========",test_herd.to_json()
         animals = self.animal.get_animals(test_farm, test_herd)
 
         if animals is None:
