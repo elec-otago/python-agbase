@@ -97,11 +97,11 @@ class Measurement:
 
     def init_with_json(self, json_measurement):
         self.id = json_measurement[u'id']
-        self.w05 = json_float(json_measurement[u'value1'])
-        self.w25 = json_float(json_measurement[u'value2'])
-        self.w50 = json_float(json_measurement[u'value3'])
-        self.w75 = json_float(json_measurement[u'value4'])
-        self.w95 = json_float(json_measurement[u'value5'])
+        self.w05 = json_float(json_measurement[u'w05'])
+        self.w25 = json_float(json_measurement[u'w25'])
+        self.w50 = json_float(json_measurement[u'w50'])
+        self.w75 = json_float(json_measurement[u'w75'])
+        self.w95 = json_float(json_measurement[u'w95'])
         self.time_stamp = json_measurement[u'timeStamp']
         self.comment = json_measurement[u'comment']
         self.user_id = json_measurement[u'userId']
@@ -120,19 +120,19 @@ class Measurement:
             return
         
         if w05 is not None:
-            measurement_details['value1'] = w05
+            measurement_details['w05'] = w05
         
         if w25 is not None:
-            measurement_details['value2'] = w25
+            measurement_details['w25'] = w25
 
         if w50 is not None:
-            measurement_details['value3'] = w50
+            measurement_details['w50'] = w50
 
         if w75 is not None:
-            measurement_details['value4'] = w75
+            measurement_details['w75'] = w75
 
         if w95 is not None:
-            measurement_details['value5'] = w95
+            measurement_details['w95'] = w95
 
         if comment is not None:
             measurement_details['comment'] = comment

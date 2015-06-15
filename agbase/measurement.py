@@ -32,10 +32,6 @@ class MeasurementAPI:
     TODO. This is not implemented.
   '''
   def upload_measurement(self, measurement_details):
-    
-   # measurement_details = measurement.to_json()
-    # {'eid': eid, 'farmId': farm.id,'algorithmId': algorithm.id, 'userId': user.id, 'timeStamp': time_stamp, 'value1': value1}
-
     result = self.ab.api_call('post', 'measurements/', measurement_details)
 
     if result.status_code != 200:
@@ -45,7 +41,7 @@ class MeasurementAPI:
 
     json_measurement = json_response[u'measurement']
 
-    self.ab.log(json_response[u'message'])
+    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
 
     result_measurement = Measurement(None)
 
@@ -67,7 +63,7 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-    self.ab.log(json_response[u'message'])
+    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
 
     if result.status_code != 200:
       return False
@@ -88,7 +84,7 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-    json_measurements = json_response[u'measurements']
+    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
 
     measurements = []
 

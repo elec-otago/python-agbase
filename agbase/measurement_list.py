@@ -17,21 +17,21 @@ class MeasurementList:
         self.measurements = []
 
 
-    def add_measurement(self, time_stamp, value1, value2=None, value3=None, value4=None, value5=None, comment=None):
+    def add_measurement(self, time_stamp, w05, w25=None, w50=None, w75=None, w95=None, comment=None):
 
-        measurement_details = {'timeStamp': time_stamp, 'value1': value1}
+        measurement_details = {'timeStamp': time_stamp, 'w05': w05}
 
-        if value2 is not None:
-            measurement_details['value2'] = value2
+        if w25 is not None:
+            measurement_details['w25'] = w25
 
-        if value3 is not None:
-            measurement_details['value3'] = value3
+        if w50 is not None:
+            measurement_details['w50'] = w50
 
-        if value4 is not None:
-            measurement_details['value4'] = value4
+        if w75 is not None:
+            measurement_details['w75'] = w75
 
-        if value5 is not None:
-            measurement_details['value5'] = value5
+        if w95 is not None:
+            measurement_details['w95'] = w95
 
         if comment is not None:
             measurement_details['comment'] = comment

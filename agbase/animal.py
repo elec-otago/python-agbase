@@ -43,8 +43,8 @@ class AnimalAPI:
         json_response = result.json()
 
         json_animal = json_response[u'animal']
-
-        self.ab.log(json_response[u'message'])
+        
+        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         return Animal(json_animal[u'id'],
             json_animal[u'eid'],
@@ -52,7 +52,19 @@ class AnimalAPI:
             json_animal[u'herdId'],
             json_animal[u'farmId'])
 
+    def merge_animals(self, eidAnimal, vidAnimal):
+        result = self.ab.api_call('put', 'animals/{}'.format(eidAnimal.id), {'sourceAnimalId': vidAnimal.id})
+        
+        json_response = result.json()
 
+        self.ab.log(json_response[u'message'])
+
+        if result.status_code != 200:
+            return False
+            
+        return True
+        
+    
     def set_animal_herd(self, animal, herd):
         if herd.farm_id != animal.farm_id:
             self.ab.log("Cannot add animal to herd on different farm!")
