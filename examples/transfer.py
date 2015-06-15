@@ -136,7 +136,7 @@ class LocalToAgBase:
       print'eid: {}'.format(animal.eid)
       animal_measurements = self.agbase.get_measurements_for_animal(animal)
       for weight in animal_measurements:
-        print'        w5 {}, w50 {}, w95 {}'.format(weight.value1,weight.value2,weight.value3)
+        print'        w5 {}, w50 {}, w95 {}'.format(weight.w05,weight.w50,weight.w95)
       print 'animals# {}'.format(len(animals))
     
   def upLoadToAgBase(self,cur): # ul = upload = stuff to put up to server

@@ -17,7 +17,7 @@ class MeasurementList:
         self.measurements = []
 
 
-    def add_measurement(self, time_stamp, w05, w25=None, w50=None, w75=None, w95=None, comment=None):
+    def add_measurement(self, time_stamp, w05, w25, w50, w75, w95, comment):
 
         measurement_details = {'timeStamp': time_stamp, 'w05': w05}
 
