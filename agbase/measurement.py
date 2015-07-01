@@ -100,8 +100,8 @@ class MeasurementAPI:
   def get_condition_scores_for_farm(self, farm, algorithm, first_date, last_date):
     params = {'farmId': farm.id}
     params['algorithmId'] = algorithm.id
-    params['startDate'] = str(first_date)
-    params['endDate'] = str(last_date)
+    #params['startDate'] = str(first_date)
+    #params['endDate'] = str(last_date)
     result = self.ab.api_call('get', 'measurements/', None, params)
 
     if result.status_code != 200:
@@ -109,8 +109,8 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
-
+   # self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+    json_measurements = json_response["measurements"]
     measurements = []
 
     for json_measurement in json_measurements:
