@@ -57,7 +57,7 @@ class AnimalAPI:
         
         json_response = result.json()
 
-        self.ab.log(json_response[u'message'])
+        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
@@ -74,7 +74,7 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log(json_response[u'message'])
+        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
@@ -89,7 +89,7 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log(json_response[u'message'])
+        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
@@ -191,7 +191,7 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log(json_response[u'message'])
+        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False

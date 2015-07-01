@@ -97,8 +97,33 @@ class MeasurementAPI:
     return measurements
 
 
-  def create_bulk_measurement_upload_list(self, animal, algorithm, user):
-    return MeasurementList(animal, algorithm, user)
+  def get_condition_scores_for_farm(self, farm, algorithm, first_date, last_date):
+    params = {'farmId': farm.id}
+    params['algorithmId'] = algorithm.id
+    params['startDate'] = str(first_date)
+    params['endDate'] = str(last_date)
+    result = self.ab.api_call('get', 'measurements/', None, params)
+
+    if result.status_code != 200:
+      return None
+
+    json_response = result.json()
+
+    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+
+    measurements = []
+
+    for json_measurement in json_measurements:
+
+      new_measurement = Measurement(None)
+      new_measurement.init_with_json(json_measurement)
+      measurements.append(new_measurement)
+
+    return measurements
+
+
+  def create_bulk_measurement_upload_list(self, algorithm, user,animal=None,farmId=None):
+    return MeasurementList(algorithm, user,animal,farmId)
 
 
   def upload_measurement_list(self, measurement_list):

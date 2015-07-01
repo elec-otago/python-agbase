@@ -10,14 +10,19 @@ __author__ = 'Tim Molteno, Mark Butler'
 
 class MeasurementList:
 
-    def __init__(self, animal, algorithm, user):
-        self.animal = animal
+    def __init__(self, algorithm, user,animal=None,farmId=None):
+        if(animal is not None):
+            self.animal = animal
+        else:
+            self.animal = None
+            self.farm_id = farmId
+
         self.algorithm = algorithm
         self.user = user
         self.measurements = []
 
 
-    def add_measurement(self, time_stamp, w05, w25, w50, w75, w95, comment):
+    def add_measurement(self, time_stamp, w05, w25, w50, w75, w95, eid=None):
 
         measurement_details = {'timeStamp': time_stamp, 'w05': w05}
 
@@ -32,9 +37,9 @@ class MeasurementList:
 
         if w95 is not None:
             measurement_details['w95'] = w95
-
-        if comment is not None:
-            measurement_details['comment'] = comment
+            
+        if eid is not None:
+            measurement_details['eid'] = eid
 
         self.measurements.append(measurement_details)
 
@@ -43,11 +48,16 @@ class MeasurementList:
 
     def get_json(self):
 
-        if len(self.measurements) <= 0:
-            return None
-
-        json_list = {'farmId':self.animal.farm_id,
+        #if len(self.measurements) <= 0:
+            #return None
+        if (self.animal is not None):
+            json_list = {'farmId':self.animal.farm_id,
                      'animalId': self.animal.id,
+                     'algorithmId': self.algorithm.id,
+                     'userId': self.user.id,
+                     'measurements': self.measurements}
+        else:
+            json_list = {'farmId':self.farm_id,
                      'algorithmId': self.algorithm.id,
                      'userId': self.user.id,
                      'measurements': self.measurements}

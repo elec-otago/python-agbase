@@ -58,8 +58,11 @@ class AlgorithmAPI:
 
 
   def get_algorithms(self, measurement_category=None):
+    params = {}
+    if measurement_category is not None:
+        params['category'] = measurement_category.id
 
-    result = self.ab.api_call('get', 'algorithms/')
+    result = self.ab.api_call('get', 'algorithms/', None, params)
 
     if result.status_code != 200:
       return None
@@ -79,13 +82,15 @@ class AlgorithmAPI:
     return algorithms
 
 
-  def get_algorithm(self, algorithmId):
-    result = self.ab.api_call('get', 'algorithms/{}'.format(algorithmId))
+  def get_algorithm(self, name):
+    result = self.ab.api_call('get', 'algorithms/', None, {"name":name})
 
     if result.status_code != 200:
       return None
-
-    json_algorithm = result.json()[u'algorithm']
+    json_response = result.json()
+    self.ab.log("get_algorithm Dump >>> " + json.dumps(json_response))
+    json_algorithm = result.json()[u'algorithms'][0]
+    self.ab.log("get_algorithm Dump >>> " + json.dumps(json_algorithm))
     a = Algorithm()
     a.init_with_json(json_algorithm)
     return a

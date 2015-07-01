@@ -150,7 +150,7 @@ class Measurement:
         return self.to_json(measurement_details,farm.id, algorithm, user, time_stamp, w05, w25, w50, w75, w95, comment )
 
     def __str__(self):
-        return "%f, %f, %f, %f, %f" % (self.w05, self.w25, self.w50, self.w75, self.w95)
+        return "%f, %f," % (self.w50,self.time_stamp)
     
     def __repr__(self):
         r = {}
