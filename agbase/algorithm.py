@@ -88,9 +88,9 @@ class AlgorithmAPI:
     if result.status_code != 200:
       return None
     json_response = result.json()
-    self.ab.log("get_algorithm Dump >>> " + json.dumps(json_response))
+    #self.ab.log("get_algorithm Dump >>> " + json.dumps(json_response))
     json_algorithm = result.json()[u'algorithms'][0]
-    self.ab.log("get_algorithm Dump >>> " + json.dumps(json_algorithm))
+    #self.ab.log("get_algorithm Dump >>> " + json.dumps(json_algorithm))
     a = Algorithm()
     a.init_with_json(json_algorithm)
     return a

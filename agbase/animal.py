@@ -44,7 +44,7 @@ class AnimalAPI:
 
         json_animal = json_response[u'animal']
         
-        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
+        #self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         return Animal(json_animal[u'id'],
             json_animal[u'eid'],
@@ -57,7 +57,7 @@ class AnimalAPI:
         
         json_response = result.json()
 
-        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
+        #self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
@@ -74,7 +74,7 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
+        #self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
@@ -89,26 +89,24 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
+        #self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False
 
         return True
       
-    def get_animals(self, farm=None, herd=None):
-
-        params = None
-
+    def get_animals(self, farm, herd=None, limit=None, offset=None):
+        params = {'farm': farm.id}
+        if herd is not None:
+            params['herd'] = herd.id
         
-        if farm is not None:
-            params = {'farm': farm.id}
-            if herd is not None:
-                params['herd'] = herd.id
-        else:
-            print "Must have a farm to get a herd"
-            return
-        
+        if limit is not None:
+            params['limit'] = limit
+            
+        if offset is not None:
+            params['offset'] = offset
+
         print "----------------params-------------", params
         result = self.ab.api_call('get', 'animals/',None,params)
 
@@ -191,7 +189,7 @@ class AnimalAPI:
 
         json_response = result.json()
 
-        self.ab.log("Animal Dump >>> " + json.dumps(json_response))
+        #self.ab.log("Animal Dump >>> " + json.dumps(json_response))
 
         if result.status_code != 200:
             return False

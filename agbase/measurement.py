@@ -41,7 +41,7 @@ class MeasurementAPI:
 
     json_measurement = json_response[u'measurement']
 
-    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+    #self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
 
     result_measurement = Measurement(None)
 
@@ -63,7 +63,7 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+    #self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
 
     if result.status_code != 200:
       return False
@@ -71,11 +71,11 @@ class MeasurementAPI:
     return True
 
 
-  def get_measurements_for_animal(self, animal, algorithm=None):
+  def get_measurements_for_animal(self, animal, algorithm=None, first_date, last_date):
     params = {'animal': animal.id}
-
+    params['farmId'] = animal.farm_id
     if algorithm is not None:
-      params['algorithm'] = algorithm
+      params['algorithm'] = algorithm.id
 
     result = self.ab.api_call('get', 'measurements/', None, params)
 
@@ -84,8 +84,8 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-    self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
-
+    #self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+    json_measurements = json_response["measurements"]
     measurements = []
 
     for json_measurement in json_measurements:
@@ -102,6 +102,7 @@ class MeasurementAPI:
     params['algorithmId'] = algorithm.id
     #params['startDate'] = str(first_date)
     #params['endDate'] = str(last_date)
+    params['include'] = "animal"
     result = self.ab.api_call('get', 'measurements/', None, params)
 
     if result.status_code != 200:
@@ -109,7 +110,7 @@ class MeasurementAPI:
 
     json_response = result.json()
 
-   # self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
+    #self.ab.log("Measurement Dump >>> " + json.dumps(json_response))
     json_measurements = json_response["measurements"]
     measurements = []
 

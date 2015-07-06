@@ -78,14 +78,14 @@ class Herd:
     
     def to_json(self):
         return {'name':self.name, 'farm_id':self.farm_id, 'id':self.id}
-
+import json
 class Measurement:
 
     def __init__(self, median):
         self.id = -1
         self.w05 = 0
         self.w25 = 0
-        self.w50 = median
+        self.w50 = 0
         self.w75 = 0
         self.w95 = 0
         self.time_stamp = None
@@ -93,7 +93,7 @@ class Measurement:
         self.user_id = -1
         self.algorithm_id = -1
         self.animal_id = -1
-
+        self.animal = None
 
     def init_with_json(self, json_measurement):
         self.id = json_measurement[u'id']
@@ -165,6 +165,9 @@ class Measurement:
         r["w50"] = self.w50
         r["w75"] = self.w75
         r["w95"] = self.w95
+        r["animal"] = None
+        if self.animal is not None:
+            r["animal"] = self.animal.__repr__()
         return r
 
 
@@ -177,3 +180,19 @@ class Animal:
         self.vid = vid
         self.herd_id = herd_id
         self.farm_id = farm_id
+        
+    def init_with_json(self,json_animal):
+        self.id = json_animal[u'id']
+        self.eid = json_animal[u'eid']
+        self.vid = json_animal[u'vid']
+        self.farmId = json_animal[u'farmId']
+        self.herdId = json_animal[u'herdId']
+        
+    def __repr__(self):
+        r = {}
+        r["id"] = self.id
+        r["eid"] = self.eid
+        r["vid"] = self.vid
+        r["farmId"] = self.farmId
+        r["herdId"] = self.herdId
+        return r
