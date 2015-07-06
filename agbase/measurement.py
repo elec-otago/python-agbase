@@ -71,7 +71,7 @@ class MeasurementAPI:
     return True
 
 
-  def get_measurements_for_animal(self, animal, algorithm=None, first_date, last_date):
+  def get_measurements_for_animal(self, animal, algorithm=None, first_date=None, last_date=None):
     params = {'animal': animal.id}
     params['farmId'] = animal.farm_id
     if algorithm is not None:
