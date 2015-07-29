@@ -193,6 +193,9 @@ class Animal:
         r["id"] = self.id
         r["eid"] = self.eid
         r["vid"] = self.vid
-        r["farmId"] = self.farmId
-        r["herdId"] = self.herdId
+        r["farmId"] = self.farm_id
+        r["herdId"] = self.herd_id
         return r
+    
+    def __str__(self):
+        return json.dumps(self.__repr__())
